@@ -1,6 +1,6 @@
 using System;
 
-namespace cli_calc.Models
+namespace InsuranceCalc.Models
 {
     public class ErrorViewModel
     {
