@@ -1,0 +1,17 @@
+Category (e.g.: Electronics, Clothing, Kitchen)
+-Name
+-Total?
+Item (e.g.: TV, Shirts, Pots and Pans)
+-Name
+-Value
+-IsDeleted
+
+Category has many Items
+
+
+'rimraf' is not recognized as an internal or external command, operable program or batch file.
+-npm install rimraf, in a new cmd window running as admin. For some reason `npm install rimraf` in the terminal in VSCode didn't resolve this.
+
+'react-scripts' is not recognized as an internal or external command, operable program or batch file.
+-run the `dotnet new react -o insurance-calc` command in a new cmd window running as admin. For some reason running the command in the terminal in VSCode works differently. At the time VSCode was not running as Admin, but didn't try that.
+
