@@ -6,7 +6,7 @@ namespace InsuranceCalc.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(CliCalcContext context)
+        public static void Initialize(InsuranceCalcContext context)
         {
             context.Database.EnsureCreated();
 
