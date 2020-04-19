@@ -10,7 +10,7 @@ namespace InsuranceCalc.Data
         {
             context.Database.EnsureCreated();
 
-            if (context.Categories.Any() || context.Items.Any())
+            if (context.Categories.Any() && context.Items.Any())
             {
                 return;
             }
@@ -41,6 +41,8 @@ namespace InsuranceCalc.Data
                 new Item{ID=8,Name="Knife Set",Value=500,CategoryId=3},
                 new Item{ID=9,Name="Misc",Value=1000,CategoryId=3}
             };
+            context.Items.AddRange(items);
+            context.SaveChanges();
         }
     }
 }
