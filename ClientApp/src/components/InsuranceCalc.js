@@ -8,13 +8,29 @@ export class InsuranceCalc extends Component {
     constructor(props) {
         super(props);
         this.state = { categories: [], loading: true };
+
+        // this.handleDelete = this.handleDelete.bind(this);
+        // this.populateInsuranceCalcData = this.populateInsuranceCalcData.bind(this);
     }
 
     componentDidMount() {
         this.populateInsuranceCalcData();
     }
 
-    static renderInsuranceCalcTable(categories) {
+    handleDelete(id) {
+        if (!window.confirm("Are you sure you want to delete this item?")) {
+            return;
+        }
+        else {
+            fetch('api/InsuranceCalc/delete/'+id, {
+                method: 'delete'
+            }).then(
+                this.populateInsuranceCalcData()
+            );
+        }
+    }
+
+    renderInsuranceCalcTable(categories) {
         return (
             <table className='table' aria-labelledby="tabelLabel">
                 <thead>
@@ -31,15 +47,16 @@ export class InsuranceCalc extends Component {
                         <tr>
                             <td colSpan='2'>{category.name}</td>
                             <td>{category.items.map(item => item.value).reduce(function (a,b) { return a + b})}</td>
+                            {/* <td><a className="action" onClick={function(e) {handleDelete(category.id);}}><FontAwesomeIcon icon ={faTrashAlt} /></a></td> */}
                         </tr>
-                        {category.items.map(item => {
-                            return (<tr key={item.key}>
+                        {category.items.map(item => { return (
+                            <tr key={item.id}>
                                 <td>&nbsp;</td>
                                 <td>{item.name}</td>
                                 <td>{item.value}</td>
-                                <td><FontAwesomeIcon icon ={faTrashAlt} /></td>
-                            </tr>);
-                        })}
+                                <td><a className="action" onClick={() => {this.handleDelete(item.id);}}><FontAwesomeIcon icon ={faTrashAlt} /></a></td>
+                            </tr>
+                        )})}
                     </table>);
                 })}
                 </tbody>
@@ -50,7 +67,7 @@ export class InsuranceCalc extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : InsuranceCalc.renderInsuranceCalcTable(this.state.categories);
+            : this.renderInsuranceCalcTable(this.state.categories);
 
         return (
             <div>
@@ -64,7 +81,6 @@ export class InsuranceCalc extends Component {
     async populateInsuranceCalcData() {
         const response = await fetch('InsuranceCalc');
         const data = await response.json();
-        console.log(data);
         this.setState({ categories: data, loading: false });
     }
 }

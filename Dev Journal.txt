@@ -45,3 +45,22 @@ Can't get Categories and Items to render with map without violating some HTML gu
 -check if we are permitted to nest tables in tables
 -name and total as headers
 -each item in a <tr>
+-I left this for now as something to polish. For now this causes warnings in the DomValidator which show as errors in F12.
+
+TypeError: this.handleDelete is not a function 
+-It's not enough to have the function defined with the correct name and all that
+-Even the order of apperance doesn't matter
+-tried to bind the function in the component constructor() method with this.handleDelete = this.handleDelete.bind(this);
+-tried adding () => this.handleDelete()
+<td><a className="action" onClick={() => this.handleDelete(item.id)}><FontAwesomeIcon icon ={faTrashAlt} /></a></td>
+-still not yet solved, this a blocker for delete and add functions
+-I'm fairly convinced that the 'this' we get is no longer the InsuranceCalc component, even though breakpointing and looking yields the InsuranceCalc constructor function.
+-Got around it: Instead of using 'this', just move the handleDelete() method inside the renderInsuranceCalcTable method and refer to it locally as handleDelete() (sans the 'this').
+-I figured out what 'this' was. I'm seeing the InsuranceCalc constructor in 'this' because that's what it is. However, renderInsuranceCalcTable was static, meaning 'this' was not an instance of the InsuranceCalc component. You can't instantiate a static class.  Removing 'static' allowed the use of 'this' just fine, and now everything is working as expected.
+
+
+
+
+-some polish: I want to make the delete buttons clickable
+./src/components/InsuranceCalc.js
+  Line 49:33:  The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
