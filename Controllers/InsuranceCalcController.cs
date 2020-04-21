@@ -37,6 +37,8 @@ namespace InsuranceCalc.Controllers
             {
                 _db.Remove(item);
                 _db.SaveChanges();
+                //This can throw exceptions if it fails.  A try-catch block here is normally necessary to recover from errors but I am omitting it; 
+                //I don't anticipate any errors I can recover from in this exercise.
                 success = true;
             }
             else
@@ -44,6 +46,16 @@ namespace InsuranceCalc.Controllers
                 success = false;
             }
             return success;
+        }
+
+        [HttpPost]
+        [Route("[controller]/add")]
+        public bool AddItem(Item item)
+        {
+            _db.Items.Add(item);
+            _db.SaveChanges();
+            //This can throw exceptions if it fails.
+            return true;
         }
     }
 }
