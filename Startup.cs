@@ -22,7 +22,7 @@ namespace InsuranceCalc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<InsuranceCalcContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllersWithViews();
+            services.AddControllers();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

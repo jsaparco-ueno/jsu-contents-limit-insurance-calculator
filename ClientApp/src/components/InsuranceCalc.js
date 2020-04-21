@@ -8,9 +8,6 @@ export class InsuranceCalc extends Component {
     constructor(props) {
         super(props);
         this.state = { categories: [], loading: true };
-
-        // this.handleDelete = this.handleDelete.bind(this);
-        // this.populateInsuranceCalcData = this.populateInsuranceCalcData.bind(this);
     }
 
     componentDidMount() {
@@ -22,46 +19,42 @@ export class InsuranceCalc extends Component {
             return;
         }
         else {
-            fetch('api/InsuranceCalc/delete/'+id, {
+            fetch('InsuranceCalc/delete/'+id, {
                 method: 'delete'
-            }).then(
+            }).then( () => {
                 this.populateInsuranceCalcData()
-            );
+            });
         }
     }
 
     renderInsuranceCalcTable(categories) {
-        return (
-            <table className='table' aria-labelledby="tabelLabel">
-                <thead>
-                {/* <tr>
-                    <th>Name</th>
-                    <th>Value</th>
-                    <th>Delete</th>
-                </tr> */}
-                </thead>
-                <tbody>
-                
-                {categories.map(category => { return (
-                    <table key={category.id}>
-                        <tr>
-                            <td colSpan='2'>{category.name}</td>
-                            <td>{category.items.map(item => item.value).reduce(function (a,b) { return a + b})}</td>
-                            {/* <td><a className="action" onClick={function(e) {handleDelete(category.id);}}><FontAwesomeIcon icon ={faTrashAlt} /></a></td> */}
-                        </tr>
-                        {category.items.map(item => { return (
-                            <tr key={item.id}>
-                                <td>&nbsp;</td>
-                                <td>{item.name}</td>
-                                <td>{item.value}</td>
-                                <td><a className="action" onClick={() => {this.handleDelete(item.id);}}><FontAwesomeIcon icon ={faTrashAlt} /></a></td>
+        if (categories.length > 0) {
+            return (
+                    <table className='table' aria-labelledby="tabelLabel">
+                    <tbody>
+                    {categories.map(category => { return (
+                        <table key={category.id}>
+                            <tr>
+                                <td colSpan='2'>{category.name}</td>
+                                <td>{category.items.map(item => item.value).reduce(function (a,b) { return a + b})}</td>
                             </tr>
-                        )})}
-                    </table>);
-                })}
-                </tbody>
-            </table>
-        )
+                            {category.items.map(item => { return (
+                                <tr key={item.id}>
+                                    <td>&nbsp;</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.value}</td>
+                                    <td><a className="action" onClick={() => {this.handleDelete(item.id);}}><FontAwesomeIcon icon ={faTrashAlt} /></a></td>
+                                </tr>
+                            )})}
+                        </table>);
+                    })}
+                    </tbody>
+                </table>
+            )
+        }
+        else {
+            return (<p>There are no items to display.</p>)
+        }
     }
 
     render() {
@@ -73,6 +66,7 @@ export class InsuranceCalc extends Component {
             <div>
                 <h1 id="tablelabel">Contents Limit Insurance Calculator</h1>
                 <p>A web app that sums a list of items' values.</p>
+                <hr/>
                 {contents}
             </div>
         );

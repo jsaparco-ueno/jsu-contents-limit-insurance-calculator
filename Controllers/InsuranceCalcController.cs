@@ -8,7 +8,6 @@ using InsuranceCalc.Models;
 namespace InsuranceCalc.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class InsuranceCalcController : ControllerBase
     {
         private InsuranceCalcContext _db;
@@ -18,6 +17,7 @@ namespace InsuranceCalc.Controllers
         }
 
         [HttpGet]
+        [Route("[controller]")]
         public IEnumerable<Category> Get()
         {
             var items = _db.Items.AsNoTracking().ToList();
@@ -25,6 +25,25 @@ namespace InsuranceCalc.Controllers
             var categories = _db.Categories.AsNoTracking().Where(c => categoryIds.Contains(c.ID)).ToList();
             categories.ForEach(c => c.Items = items.Where(i => i.CategoryId == c.ID).ToList());
             return categories;
+        }
+
+        [HttpDelete]
+        [Route("[controller]/delete/{id}")]
+        public bool DeleteItem(int id)
+        {
+            var success = false;
+            var item = _db.Items.FirstOrDefault(i => i.ID == id);
+            if (!(item == default(Item)))
+            {
+                _db.Remove(item);
+                _db.SaveChanges();
+                success = true;
+            }
+            else
+            {
+                success = false;
+            }
+            return success;
         }
     }
 }
