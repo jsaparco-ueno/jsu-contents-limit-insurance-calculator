@@ -89,7 +89,7 @@ export class InsuranceCalc extends Component {
 }
 
 class AddNewItemForm extends Component {
-    handleSubmit(event) {
+    handleSubmit(event, afterHandleAdd) {
         event.preventDefault();
         const data = new FormData();
         var item = {
@@ -101,12 +101,17 @@ class AddNewItemForm extends Component {
         fetch('InsuranceCalc/add', {
             method: 'post',
             body: data
+        }).then(response => {
+            if (response.ok) {
+                document.getElementsByName('add-item-form')[0].reset();
+                afterHandleAdd();
+            }
         });
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit} >
+            <form name='add-item-form' onSubmit={(e) => this.handleSubmit(e, this.props.afterHandleAdd)} >
                 <div className="form-group row">                    
                     <input className="form-control" type="text" name="Name" defaultValue="New Item Name" required />
                     <input className="form-control" type="text" name="Value" defaultValue="0" required />

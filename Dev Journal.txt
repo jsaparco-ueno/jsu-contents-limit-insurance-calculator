@@ -57,7 +57,7 @@ TypeError: this.handleDelete is not a function
 -I'm fairly convinced that the 'this' we get is no longer the InsuranceCalc component, even though breakpointing and looking yields the InsuranceCalc constructor function.
 -Got around it: Instead of using 'this', just move the handleDelete() method inside the renderInsuranceCalcTable method and refer to it locally as handleDelete() (sans the 'this').
 -I figured out what 'this' was. I'm seeing the InsuranceCalc constructor in 'this' because that's what it is. However, renderInsuranceCalcTable was static, meaning 'this' was not an instance of the InsuranceCalc component. You can't instantiate a static class.  Removing 'static' allowed the use of 'this' just fine, and now everything is working as expected.
--this helped me understand 'this': yehidakatz.com/2011/08/11/understand-javascript-function-invocation-and-this/
+-this helped me understand 'this': yehudakatz.com/2011/08/11/understand-javascript-function-invocation-and-this/
 
 handleDelete method doesn't work, 404 not found
 -I had to make sure the handleDelete() method was using the same URL as the action handler.  In the action handler's Route attribute there was an 'api/' at the beginning that didn't belong there.
