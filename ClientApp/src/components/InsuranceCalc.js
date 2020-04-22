@@ -27,12 +27,23 @@ export class InsuranceCalc extends Component {
         }
     }
 
+    handleAdd(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        fetch('InsuranceCalc/add', {
+            method: 'post',
+            body: formData
+        }).then( () => {
+            this.populateInsuranceCalcData()
+        });
+    }
+
     renderInsuranceCalcTable(categories) {
         if (categories.length > 0) {
             return (
                     <table className='table' aria-labelledby="tabelLabel">
                     <tbody>
-                    {categories.map(category => { return (
+                    {categories.map(category => {if (category.items.length > 0) { return (
                         <table key={category.id}>
                             <tr>
                                 <td colSpan='2'>{category.name}</td>
@@ -47,7 +58,7 @@ export class InsuranceCalc extends Component {
                                 </tr>
                             )})}
                         </table>);
-                    })}
+                    }})}
                     </tbody>
                 </table>
             )
@@ -55,6 +66,19 @@ export class InsuranceCalc extends Component {
         else {
             return (<p>There are no items to display.</p>)
         }
+    }
+
+    renderAddItemForm() {
+        // let insuranceCalcTable = this.state.loading
+        return (
+            <form onSubmit={this.handleAdd} >
+                <div className="form-group row">                    
+                    <input className="form-control" type="text" name="Name" defaultValue={this.state.itemToAdd.name} required />
+                    <input className="form-control" type="text" name="Value" defaultValue={this.state.itemToAdd.value} required />
+                    <select className="form-control" data-val="true" name="Category" defaultValue={this.state.itemToAdd.categoryid} required />
+                </div>
+            </form>
+        )
     }
 
     render() {
@@ -66,8 +90,8 @@ export class InsuranceCalc extends Component {
             <div>
                 <h1 id="tablelabel">Contents Limit Insurance Calculator</h1>
                 <p>A web app that sums a list of items' values.</p>
-                <hr/>
                 {contents}
+                {this.renderAddItemForm()}
             </div>
         );
     }

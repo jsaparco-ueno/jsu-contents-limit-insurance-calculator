@@ -21,8 +21,7 @@ namespace InsuranceCalc.Controllers
         public IEnumerable<Category> Get()
         {
             var items = _db.Items.AsNoTracking().ToList();
-            var categoryIds = items.Select(i => i.CategoryId).Distinct();
-            var categories = _db.Categories.AsNoTracking().Where(c => categoryIds.Contains(c.ID)).ToList();
+            var categories = _db.Categories.AsNoTracking().ToList();
             categories.ForEach(c => c.Items = items.Where(i => i.CategoryId == c.ID).ToList());
             return categories;
         }
