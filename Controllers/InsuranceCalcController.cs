@@ -4,6 +4,12 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using InsuranceCalc.Models;
+using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace InsuranceCalc.Controllers
 {
@@ -49,12 +55,13 @@ namespace InsuranceCalc.Controllers
 
         [HttpPost]
         [Route("[controller]/add")]
-        public bool AddItem(Item item)
+        public void AddItem(IFormCollection itemData)
         {
+            var item = JsonConvert.DeserializeObject<Item>(itemData["metadata"]);
+            item.ID = _db.Items.Max(i => i.ID)+1;
             _db.Items.Add(item);
             _db.SaveChanges();
             //This can throw exceptions if it fails.
-            return true;
         }
     }
 }

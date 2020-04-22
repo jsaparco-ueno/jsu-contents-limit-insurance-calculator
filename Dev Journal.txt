@@ -63,8 +63,14 @@ handleDelete method doesn't work, 404 not found
 -I had to make sure the handleDelete() method was using the same URL as the action handler.  In the action handler's Route attribute there was an 'api/' at the beginning that didn't belong there.
 -Once the React component was calling the action successfully, I had to make sure that the fetch().then method was getting a function.  I needed to add '() =>{this.PopulateInsuranceCalcData}'.
 
+Message [string]:"Database 'JSU-INSURANCE-CALC-LOCALDB' already exists. Choose a different database name."
+-something went wrong with the db.  Deleting it and attempting to recreate it gave "already exists" or "can't log in" errors.
+-reboot?
+-undo the delete and it started working again... 
 
-
--some polish: I want to make the delete buttons clickable
+Polish Items
+-some polish: I want to make the delete buttons something with an href attribute
 ./src/components/InsuranceCalc.js
   Line 49:33:  The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+-do something with the bool that the Delete action returns, that is if we can see it somewhere.
+-make AddItem a separate component from the InsuranceCalc grid
