@@ -46,6 +46,17 @@ export class InsuranceCalc extends Component {
                             )})}
                         </table>);
                     }})}
+                    <tr>
+                        <td>TOTAL</td>
+                        <td>
+                            {categories.map(category => {
+                                if (category.items.length > 0) { 
+                                    return (category.items.map(item => item.value).reduce(function (a,b) { return a + b}))
+                                }
+                                else return 0
+                            }).reduce(function(a,b){return a+b})}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             )

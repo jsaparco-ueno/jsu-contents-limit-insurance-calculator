@@ -58,7 +58,11 @@ namespace InsuranceCalc.Controllers
         public void AddItem(IFormCollection itemData)
         {
             var item = JsonConvert.DeserializeObject<Item>(itemData["metadata"]);
-            item.ID = _db.Items.Max(i => i.ID)+1;
+            item.ID = _db.Items.Max(i => i.ID)+1; //Get the next available Item.ID value, assuming an incrementing integer ID.
+            //Inserting a new item with ID set to '0' gives a "Cannot insert the value NULL into column 'ID'" error.
+            //Normally we would be able to insert with null ID and let the database assign it.
+            //The auto-created localDB doesn't seem to have identity specification set on the Item.ID column so it won't assign it for us.
+            //We could also set identity specification on the Item.ID column but we would need to create the db from a script, but I won't do that in this exercise.  Using the auto-created localdb simplifies running the project.
             _db.Items.Add(item);
             _db.SaveChanges();
             //This can throw exceptions if it fails.
