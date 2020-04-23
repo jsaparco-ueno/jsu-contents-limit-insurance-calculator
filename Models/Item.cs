@@ -5,7 +5,7 @@ namespace InsuranceCalc.Models
 {
     public class Item
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
         public string Name { get; set; }
         public int Value { get; set; }
