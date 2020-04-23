@@ -10,3 +10,7 @@ tr#total{
     background-color: #dddddd;
     font-weight: bold;
 }
+
+table#add-item-table {
+    width:100%;
+}

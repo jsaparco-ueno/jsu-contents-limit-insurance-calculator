@@ -117,23 +117,35 @@ class AddNewItemForm extends Component {
 
     render() {
         return (
-            <form className='form-inline' name='add-item-form' onSubmit={(e) => this.handleSubmit(e, this.props.afterHandleAdd)} >
-                <div className="input-group">
-                    <input className="form-control" type="text" name="Name" placeholder="New Item Name" required />
-                    <div className="input-group">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">$</div>
-                        </div>
-                        <input className="form-control" type="number" name="Value" placeholder="Dollar Value" defaultValue="0" required />
-                    </div>
-                    <select className="form-control" data-val="true" name="Category" defaultValue="" required>
-                        <option value="">Category (select one)</option>
-                        {this.props.categories.map(category =>
-                            <option key={category.id} value={category.id}>{category.name}</option>
-                        )}
-                    </select>
-                </div>
-                <button type="submit" className="btn btn-primary">Add</button>
+            <form name='add-item-form' className='form' onSubmit={(e) => this.handleSubmit(e, this.props.afterHandleAdd)} >
+                <table id='add-item-table'>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input className="form-control" type="text" name="Name" placeholder="New Item Name" required />
+                            </td>
+                            <td>
+                                <div className="input-group">
+                                    <div className="input-group-prepend">
+                                        <div className="input-group-text">$</div>
+                                    </div>
+                                    <input className="form-control" type="number" name="Value" placeholder="Dollar Value" defaultValue="" required />
+                                </div>
+                            </td>
+                            <td>
+                                <select className="form-control" data-val="true" name="Category" defaultValue="" required>
+                                    <option value="">Category (select one)</option>
+                                    {this.props.categories.map(category =>
+                                        <option key={category.id} value={category.id}>{category.name}</option>
+                                    )}
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit" className="btn btn-primary">Add</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
         )
     }
