@@ -29,34 +29,39 @@ export class InsuranceCalc extends Component {
         if (categories.length > 0) {
             return (
                     <table className='table' aria-labelledby="tabelLabel">
-                    <tbody>
-                    {categories.map(category => {if (category.items.length > 0) { return (
-                        <table key={category.id}>
+                        <thead>
                             <tr>
-                                <td colSpan='2'>{category.name}</td>
+                                <th>Category or Item Name</th>
+                                <th colSpan='2'>Value</th>
+                            </tr>
+                        </thead>
+                    {categories.filter(category => category.items.length > 0).map(category => 
+                        <tbody key={category.id}>
+                            <tr>
+                                <td>{category.name}</td>
                                 <td>{category.items.map(item => item.value).reduce(function (a,b) { return a + b})}</td>
                             </tr>
                             {category.items.map(item => { return (
                                 <tr key={item.id}>
-                                    <td>&nbsp;</td>
                                     <td>{item.name}</td>
                                     <td>{item.value}</td>
-                                    <td><a className="action" onClick={() => {this.handleDelete(item.id);}}><FontAwesomeIcon icon ={faTrashAlt} /></a></td>
+                                    <td><button className="action" onClick={() => {this.handleDelete(item.id);}}><FontAwesomeIcon icon ={faTrashAlt} /></button></td>
                                 </tr>
                             )})}
-                        </table>);
-                    }})}
-                    <tr>
-                        <td>TOTAL</td>
-                        <td>
-                            {categories.map(category => {
-                                if (category.items.length > 0) { 
-                                    return (category.items.map(item => item.value).reduce(function (a,b) { return a + b}))
-                                }
-                                else return 0
-                            }).reduce(function(a,b){return a+b})}
-                        </td>
-                    </tr>
+                        </tbody>
+                    )}
+                    <tbody>
+                        <tr>
+                            <td>TOTAL</td>
+                            <td>
+                                {categories.map(category => {
+                                    if (category.items.length > 0) { 
+                                        return (category.items.map(item => item.value).reduce(function (a,b) { return a + b}))
+                                    }
+                                    else return 0
+                                }).reduce(function(a,b){return a+b})}
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             )
