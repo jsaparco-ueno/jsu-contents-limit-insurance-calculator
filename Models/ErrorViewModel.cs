@@ -1,5 +1,3 @@
-using System;
-
 namespace InsuranceCalc.Models
 {
     public class ErrorViewModel

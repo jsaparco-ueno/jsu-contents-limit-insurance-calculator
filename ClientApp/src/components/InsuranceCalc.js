@@ -40,12 +40,12 @@ export class InsuranceCalc extends Component {
                         <tbody key={category.id}>
                             <tr id='category'>
                                 <td>{category.name}</td>
-                                <td colSpan='2'>{category.items.map(item => item.value).reduce(function (a,b) { return a + b})}</td>
+                                <td colSpan='2'>${category.items.map(item => item.value).reduce(function (a,b) { return a + b })}</td>
                             </tr>
                             {category.items.map(item => { return (
                                 <tr key={item.id}>
                                     <td id='item'>{item.name}</td>
-                                    <td>{item.value}</td>
+                                    <td id='item'>${item.value}</td>
                                     <td><button className="action" onClick={() => {this.handleDelete(item.id);}}><FontAwesomeIcon icon ={faTrashAlt} /></button></td>
                                 </tr>
                             )})}
@@ -54,13 +54,13 @@ export class InsuranceCalc extends Component {
                     <tbody>
                         <tr id='total'>
                             <td>TOTAL</td>
-                            <td colSpan='2'>
+                            <td colSpan='2'>$
                                 {categories.map(category => {
                                     if (category.items.length > 0) { 
-                                        return (category.items.map(item => item.value).reduce(function (a,b) { return a + b}))
+                                        return (category.items.map(item => item.value).reduce(function (a,b) { return a + b }))
                                     }
                                     else return 0
-                                }).reduce(function(a,b){return a+b})}
+                                }).reduce(function (a,b) { return a + b })}
                             </td>
                         </tr>
                     </tbody>
@@ -117,18 +117,23 @@ class AddNewItemForm extends Component {
 
     render() {
         return (
-            <form name='add-item-form' onSubmit={(e) => this.handleSubmit(e, this.props.afterHandleAdd)} >
-                <div className="form-group row">                    
-                    <input className="form-control" type="text" name="Name" defaultValue="New Item Name" required />
-                    <input className="form-control" type="text" name="Value" defaultValue="0" required />
+            <form className='form-inline' name='add-item-form' onSubmit={(e) => this.handleSubmit(e, this.props.afterHandleAdd)} >
+                <div className="input-group">
+                    <input className="form-control" type="text" name="Name" placeholder="New Item Name" required />
+                    <div className="input-group">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">$</div>
+                        </div>
+                        <input className="form-control" type="number" name="Value" placeholder="Dollar Value" defaultValue="0" required />
+                    </div>
                     <select className="form-control" data-val="true" name="Category" defaultValue="" required>
-                        <option value="">Select a Category...</option>
+                        <option value="">Category (select one)</option>
                         {this.props.categories.map(category =>
                             <option key={category.id} value={category.id}>{category.name}</option>
                         )}
                     </select>
-                    <button type="submit" className="btn btn-default">Add</button>
                 </div>
+                <button type="submit" className="btn btn-primary">Add</button>
             </form>
         )
     }

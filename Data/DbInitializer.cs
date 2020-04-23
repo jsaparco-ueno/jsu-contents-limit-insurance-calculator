@@ -1,5 +1,4 @@
 using InsuranceCalc.Models;
-using System;
 using System.Linq;
 
 namespace InsuranceCalc.Data
