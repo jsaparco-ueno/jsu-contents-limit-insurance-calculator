@@ -1,0 +1,12 @@
+tr#category {
+    background-color: #f7f7f7;
+}
+
+td#item {
+    padding-left: 70px;
+}
+
+tr#total{
+    background-color: #cccccc;
+    font-weight: bold;
+}

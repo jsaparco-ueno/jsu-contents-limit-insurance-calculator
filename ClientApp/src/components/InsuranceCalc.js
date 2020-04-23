@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import './InsuranceCalc.css';
 
 export class InsuranceCalc extends Component {
     constructor(props) {
@@ -37,13 +38,13 @@ export class InsuranceCalc extends Component {
                         </thead>
                     {categories.filter(category => category.items.length > 0).map(category => 
                         <tbody key={category.id}>
-                            <tr>
+                            <tr id='category'>
                                 <td>{category.name}</td>
-                                <td>{category.items.map(item => item.value).reduce(function (a,b) { return a + b})}</td>
+                                <td colSpan='2'>{category.items.map(item => item.value).reduce(function (a,b) { return a + b})}</td>
                             </tr>
                             {category.items.map(item => { return (
                                 <tr key={item.id}>
-                                    <td>{item.name}</td>
+                                    <td id='item'>{item.name}</td>
                                     <td>{item.value}</td>
                                     <td><button className="action" onClick={() => {this.handleDelete(item.id);}}><FontAwesomeIcon icon ={faTrashAlt} /></button></td>
                                 </tr>
@@ -51,9 +52,9 @@ export class InsuranceCalc extends Component {
                         </tbody>
                     )}
                     <tbody>
-                        <tr>
+                        <tr id='total'>
                             <td>TOTAL</td>
-                            <td>
+                            <td colSpan='2'>
                                 {categories.map(category => {
                                     if (category.items.length > 0) { 
                                         return (category.items.map(item => item.value).reduce(function (a,b) { return a + b}))
